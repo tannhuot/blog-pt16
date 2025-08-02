@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    var name = "";
+    var a = 2;
+    var b = 3;
+}
+
+@section style {
+    <link href="~/css/myCss.css" rel="stylesheet" />
+}
+
+<div class="text-center">
+    @if(name == "c#") {
+        <h1 class="display-4 text-red">Welcome @name</h1>
+    } else {
+        <h1 class="display-4 text-red">No Data @(a + b)</h1>
+    }
+    @{
+        int i = 1;
+        @while(i < 6) {
+            <h1>@(i++)</h1>
+        }
+    }
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
