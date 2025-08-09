@@ -15,8 +15,9 @@
             <div class="card p-3">
                 <form method="POST">
                     <div class="mb-3">
-                        <label for="tag" class="form-label">Category</label>
-                        <input type="text" class="form-control" id="tag" name="tag" />
+                        <label asp-for="CategoryModel.Name" class="form-label">Category</label>
+                        <input asp-for="CategoryModel.Name" type="text" class="form-control @Model.isNameError" />
+                        <span asp-validation-for="CategoryModel.Name" class="invalid-feedback"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

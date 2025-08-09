@@ -1,7 +1,7 @@
 ﻿@page
 @model blog_pt16.Pages.Category.IndexModel
 @{
-	ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Categories";
 }
 
 <div class="container my-5">
@@ -12,57 +12,68 @@
         </div>
         <!-- Blog entries-->
         <div class="col-lg-12">
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Category</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
+            @if(Model.Categories.Count() > 0) {
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Category</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card p-3">
-                <table id="datatable"
-                       class="table table-striped"
-                       style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Category</th>
-                            <th style="width: 200px">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Page</td>
-                            <td>
-                                <a class="btn btn-primary btn-sm"
-                                   asp-page="/category/edit"
-                                   role="button">Edit</a>
-                                <button class="ms-2 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</button>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>No</th>
-                            <th>Tag</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+                <div class="card p-3">
+                    <table id="datatable"
+                    class="table table-striped"
+                    style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Category</th>
+                                <th style="width: 200px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+                                @foreach(var item in Model.Categories) {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm"
+                                               asp-page="/category/edit"
+                                               asp-route-id="@item.Id"
+                                               role="button">Edit</a>
+                                            <button class="ms-2 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Tag</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            } else {
+                <div class="border p-3 mt-3">
+                    <p class="text-center fs-4">No Data</p>
+                </div>
+            }
         </div>
     </div>
 </div>
