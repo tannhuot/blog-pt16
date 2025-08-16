@@ -10,7 +10,7 @@ namespace blog_pt16.Pages.Category
         [BindProperty]
         public CategoryModel CategoryModel { get; set; }
 
-        public string isNameError { get; set; } = "";
+        public string isNameError { get; set; }
 
         public async Task OnGet(int id)
         {

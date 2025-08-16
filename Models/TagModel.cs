@@ -2,14 +2,14 @@
 
 namespace blog_pt16.Models
 {
-    public class CategoryModel
+    public class TagModel
     {
         public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
 
-        // One-To-Many (One)
+        // Many-To-Many
         // Navigation Reference Property
         public ICollection<PostModel> Posts { get; set; }
     }

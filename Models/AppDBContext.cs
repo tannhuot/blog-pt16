@@ -11,5 +11,7 @@ namespace blog_pt16.Models
         }
 
         public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<TagModel> Tags { get; set; }
+        public DbSet<PostModel> Posts { get; set; }
     }
 }

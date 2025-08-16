@@ -16,7 +16,9 @@ namespace blog_pt16.Pages.Category
         {
         }
 
-        public async Task<IActionResult> OnPost() {
+        public async Task<IActionResult> OnPost() 
+        {
+            ModelState.Remove("CategoryModel.Posts");
 
             if (ModelState.IsValid)
             {

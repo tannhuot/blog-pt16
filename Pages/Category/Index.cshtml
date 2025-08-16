@@ -13,6 +13,16 @@
         <!-- Blog entries-->
         <div class="col-lg-12">
             @if(Model.Categories.Count() > 0) {
+                <form asp-page-handler="Search" method="post" class="my-3">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-4">
+                            <input asp-for="CategoryName" type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </form>
                 <!-- Modal -->
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -54,7 +64,9 @@
                                                asp-page="/category/edit"
                                                asp-route-id="@item.Id"
                                                role="button">Edit</a>
-                                            <button class="ms-2 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</button>
+                                               <form style="display:inline;" id="form-@item.Id" method="post" asp-route-id="@item.Id">
+                                                    <button data-id="@item.Id" class="ms-2 btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</button>
+                                               </form>
                                         </td>
                                     </tr>
                                 }
@@ -77,3 +89,19 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        let formId = 0;
+
+        $("td button").click((e) => {
+            e.preventDefault();
+            formId = e.currentTarget.dataset.id;
+        });
+
+        $(".modal-footer button").eq(1).click(() => {
+            $("#form-" + formId).submit();
+        });
+
+    </script>
+}
