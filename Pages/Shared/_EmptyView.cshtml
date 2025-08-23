@@ -1,0 +1,13 @@
+﻿@model dynamic
+
+<div class="border p-3 mt-3 text-center">
+    @if (String.IsNullOrEmpty(Model.Message)) {
+        <p class="text-center fs-4">No Data</p>
+    } else {
+        <p class="text-center fs-4">@Model.Message</p>
+    }
+
+    @if (!String.IsNullOrEmpty(Model.Image)) {
+        <img src="~/images/@Model.Image" />
+    }
+</div>

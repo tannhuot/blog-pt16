@@ -82,9 +82,7 @@
                     </table>
                 </div>
             } else {
-                <div class="border p-3 mt-3">
-                    <p class="text-center fs-4">No Data</p>
-                </div>
+                <partial name="_EmptyView" model="@(new {Message = "", Image = ""})" />
             }
         </div>
     </div>

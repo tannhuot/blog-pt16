@@ -1,4 +1,6 @@
-﻿namespace blog_pt16.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace blog_pt16.Models
 {
     public class PostModel
     {
@@ -6,6 +8,9 @@
         public string Title { get; set; }
         public string Content { get; set; }
         public string Thumnail { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
 
         // One-To-Many (Many)
         // FK properties

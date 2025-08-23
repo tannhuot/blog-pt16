@@ -1,0 +1,78 @@
+﻿@page
+@model blog_pt16.Pages.Post.IndexModel
+@{
+    ViewData["Title"] = "Post";
+    var data = new { Message = "There's no data to show.", Image = "img1.png" };
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="d-flex justify-content-between mb-2">
+            <h3>Post List</h3>
+            <a class="btn btn-success" asp-page="/post/create" role="button">Create</a>
+        </div>
+        <!-- Blog entries-->
+        <div class="col-lg-12">
+            @if (Model.Posts.Count() > 0) {
+                <div class="card p-3">
+                    <table id="datatable"
+                    class="table table-striped"
+                    style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Thumbnail</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Tag</th>
+                                <th style="width: 200px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+                                @foreach(var item in Model.Posts) {
+                                    <tr>
+                                        <td>@(++i)</td>
+                                        <td>
+                                            <img style="width:80px" src="~/uploads/@item.Thumnail"/>
+                                        </td>
+                                        <td>@item.Title</td>
+                                        <td>@item.Category.Name</td>
+                                        <td>
+                                            <ul>
+                                                @foreach(var tag in item.Tags) {
+                                                    <li>@tag.Name</li>
+                                                }
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm"
+                                               asp-page="/post/edit"
+                                               role="button">Edit</a>
+                                               <form style="display:inline;" method="post" asp-route-id="@item.Id">
+                                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                               </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>No</th>
+                                <th>Thumbnail</th>
+                                <th>Title</th>
+                                <th>Tag</th>
+                                <th>Tag</th>
+                                <th style="width: 100px">Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            } else {
+                <partial name="_EmptyView" model="@data" />
+            }
+        </div>
+    </div>
+</div>
