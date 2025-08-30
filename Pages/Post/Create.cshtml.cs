@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+
 
 namespace blog_pt16.Pages.Post
 {
@@ -16,8 +16,10 @@ namespace blog_pt16.Pages.Post
         [BindProperty]
         public int SelectedCategory { get; set; }
 
-        [BindProperty]
+        
         public IEnumerable<TagModel> Tags { get; set; }
+        [BindProperty]
+        public List<int> SelectedTagIds { get; set; } = [];
 
 
         public async Task OnGet()
@@ -32,14 +34,6 @@ namespace blog_pt16.Pages.Post
 
         public async Task<IActionResult> OnPost()
         {
-            Console.WriteLine(Tags.Count());
-            foreach (var item in Tags)
-            {
-                Console.WriteLine($"{item.Name} {item.IsSelected}");
-            }
-
-            await OnGet();
-            return Page();
             ModelState.Remove("Post.Category");
             ModelState.Remove("Post.Thumnail");
             ModelState.Remove("Post.ImageFile");
@@ -86,13 +80,10 @@ namespace blog_pt16.Pages.Post
 
                     //Many-to-Many
                     Post.Tags = [];
-                    foreach (var tag in Tags)
+                    foreach (var tagId in SelectedTagIds)
                     {
-                        if (tag.IsSelected)
-                        {
-                            var existTag = await _db.Tags.FindAsync(tag.Id);
-                            Post.Tags.Add(existTag);
-                        }
+                        var existTag = await _db.Tags.FindAsync(tagId);
+                        Post.Tags.Add(existTag);
                     }
 
                     await _db.Posts.AddAsync(Post);
@@ -104,6 +95,16 @@ namespace blog_pt16.Pages.Post
             }
 
             await OnGet();
+            foreach (var id in SelectedTagIds)
+            {
+                foreach (var tag in Tags)
+                {
+                    if (tag.Id == id)
+                    {
+                        tag.IsSelected = true;
+                    }
+                }
+            }
             return Page();
         }
     }

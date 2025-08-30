@@ -35,6 +35,7 @@
                                type="file"
                                accept="image/*"
                                asp-for="Post.ImageFile" />
+                       <img id="previewImage" src="#" style="display:none; width: 150px; margin-top: 20px"/>
                     </div>
                     <div class="mb-3">
                         <label asp-for="SelectedCategory" class="form-label">Category</label>
@@ -50,8 +51,11 @@
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input"
                                            type="checkbox"
-                                           asp-for="@item.IsSelected" />
-                                    <label class="form-check-label" asp-for="@item.IsSelected">@item.Name</label>
+                                           id="cb-@item.Id"
+                                           name="SelectedTagIds"
+                                           value="@item.Id"
+                                           checked="@item.IsSelected"/>
+                                    <label class="form-check-label" for="cb-@item.Id">@item.Name</label>
                                 </div>
                             }
                         </div>
@@ -67,5 +71,20 @@
 @section Scripts {
     <script>
         $(".input-validation-error").addClass("is-invalid");
+        // Post_ImageFile/
+        
+        $("#Post_ImageFile").change((e) => {
+            var input = e.currentTarget;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    console.log("ok");
+                    var preview = document.getElementById("previewImage");
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(input.files[0]);
+            };
+        });
     </script>
 }
