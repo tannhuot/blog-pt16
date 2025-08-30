@@ -60,7 +60,7 @@ namespace blog_pt16.Pages.Post
                         var uploadFileName = $"{fileName}_{Guid.NewGuid()}{extension}";
 
                         var filePath = Path.Combine(uploadFolder, uploadFileName);
-
+                        //System.IO.File.Delete(filePath);
                         // Save file
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
