@@ -1,9 +1,11 @@
 using blog_pt16.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace blog_pt16.Pages.Post
 {
+    [Authorize]
     public class IndexModel(AppDBContext _db) : PageModel
     {
         public IEnumerable<PostModel> Posts { get; set; }

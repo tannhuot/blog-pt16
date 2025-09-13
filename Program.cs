@@ -1,11 +1,17 @@
 using blog_pt16.Models;
 using blog_pt16.Models.Utils;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDBContext>();
+
+builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDBContext>();
 builder.Services.AddSingleton<IUtils, Utils>();
 
 var app = builder.Build();
